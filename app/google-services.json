@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "632796581460",
+    "firebase_url": "https://crowdfundings-6827c.firebaseio.com",
+    "project_id": "crowdfundings-6827c",
+    "storage_bucket": "crowdfundings-6827c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632796581460:android:2e25f69c751991d6",
+        "android_client_info": {
+          "package_name": "com.donald.crowdfunding.business"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "632796581460-g1101t71qioo20et59ni320lanp0nmg7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.donald.crowdfunding.business",
+            "certificate_hash": "ddd41d1ef153c4939a3bc05d68ceff404439546b"
+          }
+        },
+        {
+          "client_id": "632796581460-1mltcn7kdnlk4luc54b0sp06gnoqtgv6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3cQnNMbDX_pfsp146w73u17AKDBG-8vI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "632796581460-1mltcn7kdnlk4luc54b0sp06gnoqtgv6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
