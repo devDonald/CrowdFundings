@@ -2,4 +2,12 @@
 <resources>
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="reset_message">We have sent you instructions to reset your password!</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="phone">Phone</string>
+    <string name="occupation">Occupation</string>
+    <string name="nationality">Nationality</string>
+    <string name="loaction">Location</string>
+    <string name="address">Address</string>
+    <string name="names">Names</string>
+    <string name="biography">Biography</string>
 </resources>

@@ -13,11 +13,22 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.donald.crowdfunding.business.R;
 import com.donald.crowdfunding.fragments.Profile;
+import com.donald.crowdfunding.models.ProfileModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MainActivity extends AppCompatActivity
@@ -26,6 +37,10 @@ public class MainActivity extends AppCompatActivity
     private  FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private String uid;
+    private String email;
+    private CircleImageView userImage;
+    private TextView userName, userEmail;
+    private DatabaseReference userProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +49,16 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        userProfile = FirebaseDatabase.getInstance().getReference().child("Profiles");
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        uid=currentUser.getUid();
+        if (currentUser!=null) {
+            uid = currentUser.getUid();
+            email = currentUser.getEmail();
+        }
 
         Log.d("uid",""+uid);
+        Log.d("email",""+email);
+
         mAuth= FirebaseAuth.getInstance();
 
 
@@ -55,15 +76,43 @@ public class MainActivity extends AppCompatActivity
         };
 
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View hView = navigationView.getHeaderView(0);
+
+        userName = (TextView) hView.findViewById(R.id.nav_userName);
+        userEmail = (TextView) hView.findViewById(R.id.nav_email);
+        userImage = (CircleImageView) hView.findViewById(R.id.navImage);
+
+        userEmail.setText(email);
+
+        userProfile.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ProfileModel model = dataSnapshot.getValue(ProfileModel.class);
+                String user_image = dataSnapshot.child("profileImage").getValue(String.class);
+
+                userName.setText(model.getName());
+                Log.d("name",""+model.getName());
+                Picasso.with(getApplicationContext()).load(user_image).into(userImage);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     @Override
@@ -120,7 +169,7 @@ public class MainActivity extends AppCompatActivity
         }else if (id==R.id.nav_profile){
             Bundle bundle = new Bundle();
             bundle.putString("userId", uid);
-            //bundle.putString("userEmail", authUserEmail);
+            bundle.putString("userEmail", email);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             Profile profileActivity = new Profile();
             profileActivity.setArguments(bundle);
@@ -153,4 +202,11 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+       // LayoutInflater inflater =
+    }
+
 }
