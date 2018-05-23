@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.donald.crowdfunding.business.R;
 import com.donald.crowdfunding.fragments.Profile;
 import com.donald.crowdfunding.models.ProfileModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -165,6 +168,12 @@ public class MainActivity extends AppCompatActivity
         }else if (id==R.id.love){
 
         }else if (id==R.id.recommend){
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            String shareBodyText = "Share crowd funding app";
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Subject here");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
+            startActivity(Intent.createChooser(sharingIntent, "Sharing Options"));
 
         }else if (id==R.id.nav_profile){
             Bundle bundle = new Bundle();
@@ -177,8 +186,25 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         }
-        else if (id == R.id.nav_editProfile) {
+        else if (id == R.id.nav_delete) {
+            if (currentUser!=null){
+                currentUser.delete().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            MDToast.makeText(getApplicationContext(),"Account deleted successfully",
+                                    MDToast.LENGTH_LONG,MDToast.TYPE_SUCCESS).show();
+                            startActivity(new Intent(MainActivity.this, LandingPage.class));
+                            finish();
 
+                        } else {
+                            MDToast.makeText(getApplicationContext(),"Sorry,account cannot be deleted",
+                                    MDToast.LENGTH_LONG,MDToast.TYPE_ERROR).show();
+
+                        }
+                    }
+                });
+            }
 
         } else if (id == R.id.nav_logout) {
             mAuth.signOut();
@@ -204,9 +230,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
-       // LayoutInflater inflater =
+        mAuth.addAuthStateListener(authListener);
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (authListener != null) {
+            mAuth.removeAuthStateListener(authListener);
+        }
+    }
 }
