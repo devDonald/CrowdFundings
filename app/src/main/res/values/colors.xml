@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="colorPrimary">#253546</color>
+    <color name="colorPrimaryDark">#1C2936</color>
+    <color name="colorAccent">#FFFFFF</color>
+
+    <color name="colorWhite">#c2c2c2</color>
+    <color name="font_color">#33CFDA</color>
+    <color name="cardview_bgcolor">#d2253546</color>
+    <color name="gray_color">#696969</color>
+
     <color name="blue">#0b32f5</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#c32623</color>
     <color name="darkRed">#c32623</color>
-    <color name="colorPrimary">#00bcd4</color>
-    <color name="colorPrimaryDark">#0097a7</color>
-    <color name="colorAccent">#f2fe71</color>
+
 </resources>

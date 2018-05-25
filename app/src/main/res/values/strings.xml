@@ -2,8 +2,8 @@
     <string name="app_name">CrowdFunding</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">User Name</string>
-    <string name="nav_header_subtitle">User email</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="login">Login</string>
@@ -18,39 +18,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="update_profile">Update Profile</string>
-    <string name="phone">Phone</string>
-    <string name="occupation">Occupation</string>
-    <string name="nationality">Nationality</string>
-    <string name="loaction">Location</string>
-    <string name="address">Address</string>
-    <string name="names">Names</string>
-    <string name="biography">Biography</string>
-    <string name="email_address">Email Address</string>
-    <string name="payment_description">Payment Description</string>
-    <string name="title_activity_payment">payment</string>
-    <string name="title_activity_payment_History">Payment History</string>
-    <string name="paymentTitle">Make Payment to Complete your Truck Booking Process</string>
-    <string name="nameOnCard">Name on Card</string>
-    <string name="emailForCard">Email</string>
-    <string name="paymentFor">Payment For</string>
-    <string name="phoneNo">Phone Number</string>
-    <string name="amountToPay">Amount(&#8358;)</string>
-    <string name="cardNo">Card Number</string>
-    <string name="CardExpiry">Expiry Date</string>
-    <string name="expiryHint">MM/YY</string>
-    <string name="cvv">CVV</string>
-    <string name="paynow">Pay Now</string>
-    <string name="poweredBy">Powered by</string>
-    <string name="expiryYear">YY</string>
-    <string name="expiryMM">MM</string>
-    <string name="naira_symbol">NGN&#160;</string>
-    <string name="purchase">Payment</string>
-
-    <string-array name="gender">
-        <item>Select Gender</item>
-        <item>Male</item>
-        <item>Female</item>
-    </string-array>
 
 </resources>
