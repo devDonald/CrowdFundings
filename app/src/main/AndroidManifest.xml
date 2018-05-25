@@ -9,9 +9,9 @@
         android:allowBackup="true"
         android:icon="@drawable/crowdicon"
         android:label="@string/app_name"
+        tools:replace="android:icon"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        tools:replace="android:icon"
         android:theme="@style/AppTheme">
         <activity
             android:name="com.donald.crowdfunding.activities.MainActivity"
@@ -26,7 +26,7 @@
         </activity>
         <activity android:name="com.donald.crowdfunding.activities.Signin" />
         <activity android:name="com.donald.crowdfunding.activities.Signup" />
-        <activity android:name="com.donald.crowdfunding.activities.PasswordReset"></activity>
+        <activity android:name="com.donald.crowdfunding.activities.PasswordReset"/>
     </application>
 
 </manifest>

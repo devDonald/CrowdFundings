@@ -31,7 +31,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
-public class UpdateProfile extends AppCompatActivity {
+public class AddProfile extends AppCompatActivity {
     private EditText uname;
     private Spinner ugender;
     private EditText uaddress;
@@ -40,6 +40,10 @@ public class UpdateProfile extends AppCompatActivity {
     private EditText uBiography;
     private EditText uEmail;
     private Button updateButton;
+    private EditText uBankName;
+    private EditText uAccountName;
+    private EditText uAccountNumber;
+
 
     private ImageView member_image;
     private DatabaseReference profileReference;
@@ -56,7 +60,7 @@ public class UpdateProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_profile);
+        setContentView(R.layout.activity_add_profile);
 
         uname = findViewById(R.id.et_person_name);
         ugender = findViewById(R.id.gender);
@@ -66,6 +70,9 @@ public class UpdateProfile extends AppCompatActivity {
         uBiography = findViewById(R.id.et_person_biography);
         member_image = findViewById(R.id.ib_person_image);
         uEmail = findViewById(R.id.et_person_email);
+        uBankName = findViewById(R.id.et_bank_name);
+        uAccountName = findViewById(R.id.et_accout_name);
+        uAccountNumber = findViewById(R.id.et_account_number);
 
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -109,6 +116,9 @@ public class UpdateProfile extends AppCompatActivity {
                 final String phone =uphone.getText().toString().trim();
                 final String occupation = uoccupation.getText().toString().trim();
                 final String biography = uBiography.getText().toString().trim();
+                final String bankName = uBankName.getText().toString().trim();
+                final String accountName =uAccountName.getText().toString().trim();
+                final String accountNumber=uAccountNumber.getText().toString().trim();
 
                 if (TextUtils.isEmpty(name)){
                     MDToast.makeText(getApplicationContext(),"Names cannot be Empty",
@@ -127,14 +137,28 @@ public class UpdateProfile extends AppCompatActivity {
                             MDToast.LENGTH_LONG,MDToast.TYPE_ERROR).show();
 
                 } else if (TextUtils.isEmpty(biography)){
-                    MDToast.makeText(UpdateProfile.this,"biography cannot be Empty",
+                    MDToast.makeText(AddProfile.this,"biography cannot be Empty",
                             MDToast.LENGTH_LONG,MDToast.TYPE_ERROR).show();
 
                 }else if (gender.equalsIgnoreCase("Select Gender")){
                     MDToast.makeText(getApplicationContext()," Pls Select a valid gender",
                             MDToast.LENGTH_LONG,MDToast.TYPE_ERROR).show();
 
-                } else {
+                } else if (TextUtils.isEmpty(bankName)){
+                    MDToast.makeText(getApplicationContext(),"Bank Name cannot be Empty",
+                            MDToast.LENGTH_LONG,MDToast.TYPE_ERROR).show();
+
+                } else if (TextUtils.isEmpty(accountName)){
+                    MDToast.makeText(AddProfile.this,"Account Name cannot be Empty",
+                            MDToast.LENGTH_LONG,MDToast.TYPE_ERROR).show();
+
+                }else if (TextUtils.isEmpty(accountNumber)){
+                    MDToast.makeText(getApplicationContext()," Account Number cannot be empty",
+                            MDToast.LENGTH_LONG,MDToast.TYPE_ERROR).show();
+
+                }
+
+                else {
                     mProgress.setMessage("Updating user...");
                     mProgress.show();
                     StorageReference filePath = profileStorage.child(imageUri.getLastPathSegment());
@@ -144,7 +168,7 @@ public class UpdateProfile extends AppCompatActivity {
                             Uri downloadUri = taskSnapshot.getDownloadUrl();
                             id = profileReference.push().getKey();
                              ProfileModel model = new ProfileModel(uid,name,gender,address, email, phone,
-                                     occupation,biography);
+                                     occupation,biography,bankName,accountName,accountNumber);
                             profileReference.child(uid).setValue(model);
                             profileReference.child(uid).child("profileImage").setValue(downloadUri.toString());
 
@@ -153,7 +177,7 @@ public class UpdateProfile extends AppCompatActivity {
                                     MDToast.LENGTH_LONG,MDToast.TYPE_SUCCESS);
                             mdToast.show();
                             mProgress.dismiss();
-                            Intent payIntent = new Intent(UpdateProfile.this, MainActivity.class);
+                            Intent payIntent = new Intent(AddProfile.this, MainActivity.class);
                             payIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                                     Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(payIntent);

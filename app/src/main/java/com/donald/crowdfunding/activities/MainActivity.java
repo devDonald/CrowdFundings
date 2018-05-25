@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.donald.crowdfunding.business.R;
+import com.donald.crowdfunding.fragments.CreatePost;
 import com.donald.crowdfunding.fragments.Profile;
 import com.donald.crowdfunding.models.ProfileModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -165,6 +166,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id==R.id.myProject){
 
         } else if(id==R.id.createProject){
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            CreatePost createPost = new CreatePost();
+            fragmentTransaction.replace(R.id.content_main, createPost);
+            fragmentTransaction.commit();
 
         }else if(id==R.id.editProject){
 
@@ -239,6 +244,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onStart() {
         super.onStart();
+
         mAuth.addAuthStateListener(authListener);
     }
 

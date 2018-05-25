@@ -1,13 +1,15 @@
 package com.donald.crowdfunding.models;
 
 public class ProfileModel {
-    String uID,name, gender, address,email, phone,occupation, biography;
+    private String uID,name, gender, address,email, phone,occupation, biography;
+    private String bankName, accountName, accountNumber;
 
     public ProfileModel() {
     }
 
     public ProfileModel(String uID, String name, String gender, String address,String email,
-                        String phone, String occupation, String biography) {
+                        String phone, String occupation, String biography,
+                        String bankName,String accountName, String accountNumber) {
         this.uID = uID;
         this.name = name;
         this.gender = gender;
@@ -16,6 +18,33 @@ public class ProfileModel {
         this.phone = phone;
         this.occupation = occupation;
         this.biography = biography;
+        this.bankName =bankName;
+        this.accountName = accountName;
+        this.accountNumber = accountNumber;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public String getuID() {
