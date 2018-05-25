@@ -1,0 +1,171 @@
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        tools:context="com.donald.crowdfunding.fragments.Donate">
+
+        <RelativeLayout
+            android:id="@+id/activity_donate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="0dp">
+
+
+                <!--<TextView-->
+
+                    <!--android:id="@+id/textView"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:layout_marginBottom="10dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="Bank Details"-->
+                    <!--android:textColor="@color/font_color"-->
+                    <!--android:textStyle="bold" />-->
+
+            <LinearLayout
+                android:id="@+id/nameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/nameLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="5dp"
+                    tools:text="Holder Name:"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/holderName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="5dp"
+                    tools:text=" Smart Cornelius "
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/bankName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Zenith Bank PLC"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_below="@+id/nameLayout"/>
+
+            <LinearLayout
+                android:id="@+id/bankLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/bankName">
+
+                <TextView
+                    android:id="@+id/bankAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Bank A/C: "
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/accountNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    tools:text=" 01960490830 "
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/contactLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/bankLayout">
+
+
+
+            <TextView
+                android:id="@+id/contactLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Contact Number: "
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ContactNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                tools:text="+2347034543935"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/gatewayTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_below="@+id/contactLayout"
+                android:text="You can also donate through our online payment gateway"
+                android:textColor="@color/font_color"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/paymentAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gatewayTitle"
+                android:inputType="number"
+                android:layout_centerHorizontal="true"
+                android:padding="10dp"
+                android:background="@drawable/form_border"
+                android:hint="Enter donation amount"
+                android:textColorHint="@color/gray_color"
+                android:textColor="@color/white"/>
+
+            <Button
+                android:id="@+id/finalSubmitBtn"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/paymentAmount"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/donate_btn"
+                android:text="Donate Now!"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+    </FrameLayout>
+

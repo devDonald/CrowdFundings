@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        tools:context="com.donald.crowdfunding.fragments.CreatePost">
+
+        <EditText
+            android:id="@+id/post_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/form_border"
+            android:hint="Post Title"
+            android:inputType="text"
+            android:padding="8dp"
+            android:paddingStart="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/colorWhite"
+            android:textSize="16sp"
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/post_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/post_title"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/form_border"
+            android:gravity="top|start"
+            android:hint="Description"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:maxLines="10"
+            android:padding="8dp"
+            android:paddingStart="10dp"
+            android:scrollbars="vertical"
+            android:textColor="@color/white"
+            android:textColorHint="@color/colorWhite"
+            android:textSize="16sp"
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/post_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/post_description"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/form_border"
+            android:hint="Location"
+            android:inputType="textPostalAddress"
+            android:padding="8dp"
+            android:paddingStart="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/colorWhite"
+            android:textSize="16sp"
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/post_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/post_location"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/form_border"
+            android:hint="Category"
+            android:inputType="text"
+            android:padding="8dp"
+            android:paddingStart="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/colorWhite"
+            android:textSize="16sp"
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/post_fund"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/post_category"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/form_border"
+            android:hint="Target Fund"
+            android:inputType="number"
+            android:padding="8dp"
+            android:paddingStart="12dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/colorWhite"
+            android:textSize="16sp"
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/post_remaining_day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/post_fund"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/form_border"
+            android:hint="Remaining Day"
+            android:inputType="number"
+            android:padding="8dp"
+            android:paddingStart="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/colorWhite"
+            android:textSize="16sp"
+            tools:ignore="RtlSymmetry" />
+
+        <Button
+            android:id="@+id/post_profile_pix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/post_remaining_day"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/form_border"
+            android:drawableLeft="@android:drawable/ic_menu_camera"
+            android:paddingRight="5dp"
+            android:text="Project Photo"
+            android:textColor="@color/colorWhite" />
+
+
+        <Button
+            android:id="@+id/submit_btn"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/post_profile_pix"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_light_blue"
+            android:text="Submit Form"
+            android:textColor="@android:color/black" />
+
+
+    </RelativeLayout>
+</ScrollView>
+
