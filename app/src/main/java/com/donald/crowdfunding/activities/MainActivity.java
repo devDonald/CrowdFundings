@@ -101,11 +101,16 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ProfileModel model = dataSnapshot.getValue(ProfileModel.class);
-                String user_image = dataSnapshot.child("profileImage").getValue(String.class);
+                try{
+                    String user_image = dataSnapshot.child("profileImage").getValue(String.class);
+                    userName.setText(model.getName());
+                    Log.d("name",""+model.getName());
+                    Picasso.with(getApplicationContext()).load(user_image).into(userImage);
 
-                userName.setText(model.getName());
-                Log.d("name",""+model.getName());
-                Picasso.with(getApplicationContext()).load(user_image).into(userImage);
+                } catch (Exception e){
+
+                }
+
 
             }
 
@@ -164,6 +169,8 @@ public class MainActivity extends AppCompatActivity
         }else if(id==R.id.editProject){
 
         } else if (id==R.id.payments) {
+//            Intent payment = new Intent(this,Payment.class);
+//            startActivity(payment);
 
         }else if (id==R.id.love){
 

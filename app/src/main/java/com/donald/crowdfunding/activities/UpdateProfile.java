@@ -19,8 +19,11 @@ import com.donald.crowdfunding.models.ProfileModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -35,6 +38,7 @@ public class UpdateProfile extends AppCompatActivity {
     private EditText uphone;
     private EditText uoccupation;
     private EditText uBiography;
+    private EditText uEmail;
     private Button updateButton;
 
     private ImageView member_image;
@@ -61,6 +65,7 @@ public class UpdateProfile extends AppCompatActivity {
         uoccupation = findViewById(R.id.et_person_occupation);
         uBiography = findViewById(R.id.et_person_biography);
         member_image = findViewById(R.id.ib_person_image);
+        uEmail = findViewById(R.id.et_person_email);
 
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -80,6 +85,17 @@ public class UpdateProfile extends AppCompatActivity {
         profileReference=FirebaseDatabase.getInstance().getReference().child("Profiles");
         mProgress = new ProgressDialog(this);
         profileStorage = FirebaseStorage.getInstance().getReference().child("ProfileImages");
+        profileReference.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         updateButton = findViewById(R.id.bt_update_profile);
 

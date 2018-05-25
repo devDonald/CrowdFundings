@@ -10,4 +10,6 @@
     <string name="address">Address</string>
     <string name="names">Names</string>
     <string name="biography">Biography</string>
+    <string name="email_address">Email Address</string>
+    <string name="payment_description">Payment Description</string>
 </resources>

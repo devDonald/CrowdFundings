@@ -26,6 +26,27 @@
     <string name="address">Address</string>
     <string name="names">Names</string>
     <string name="biography">Biography</string>
+    <string name="email_address">Email Address</string>
+    <string name="payment_description">Payment Description</string>
+    <string name="title_activity_payment">payment</string>
+    <string name="title_activity_payment_History">Payment History</string>
+    <string name="paymentTitle">Make Payment to Complete your Truck Booking Process</string>
+    <string name="nameOnCard">Name on Card</string>
+    <string name="emailForCard">Email</string>
+    <string name="paymentFor">Payment For</string>
+    <string name="phoneNo">Phone Number</string>
+    <string name="amountToPay">Amount(&#8358;)</string>
+    <string name="cardNo">Card Number</string>
+    <string name="CardExpiry">Expiry Date</string>
+    <string name="expiryHint">MM/YY</string>
+    <string name="cvv">CVV</string>
+    <string name="paynow">Pay Now</string>
+    <string name="poweredBy">Powered by</string>
+    <string name="expiryYear">YY</string>
+    <string name="expiryMM">MM</string>
+    <string name="naira_symbol">NGN&#160;</string>
+    <string name="purchase">Payment</string>
+
     <string-array name="gender">
         <item>Select Gender</item>
         <item>Male</item>

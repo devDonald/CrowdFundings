@@ -79,6 +79,19 @@
                 android:imeOptions="actionNext"
                 android:layout_below="@+id/et_person_address"
                 />
+            <EditText
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/border_text"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_person_email"
+                android:inputType="phone"
+                android:fontFamily="casual"
+                android:imeOptions="actionNext"
+                android:layout_below="@+id/et_person_phone"
+                />
 
             <EditText
                 android:layout_marginTop="8dp"

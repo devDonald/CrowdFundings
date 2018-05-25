@@ -71,15 +71,21 @@ public class Profile extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ProfileModel profileModel = dataSnapshot.getValue(ProfileModel.class);
-                String image = dataSnapshot.child("profileImage").getValue(String.class);
-                profileName.setText(profileModel.getName());
-                profileAddress.setText(profileModel.getAddress());
-                profileBio.setText(profileModel.getBiography());
-                profileEmail.setText(profileModel.getEmail());
-                profileOccupation.setText(profileModel.getOccupation());
-                profilePhone.setText(profileModel.getPhone());
+                try {
+                    String image = dataSnapshot.child("profileImage").getValue(String.class);
+                    profileName.setText(profileModel.getName());
+                    profileAddress.setText(profileModel.getAddress());
+                    profileBio.setText(profileModel.getBiography());
+                    profileEmail.setText(profileModel.getEmail());
+                    profileOccupation.setText(profileModel.getOccupation());
+                    profilePhone.setText(profileModel.getPhone());
 
-                Picasso.with(context).load(image).into(profileImage);
+                    Picasso.with(context).load(image).into(profileImage);
+
+
+                }catch (Exception e){
+
+                }
 
             }
 
