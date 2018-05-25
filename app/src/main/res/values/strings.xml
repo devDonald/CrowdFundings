@@ -17,6 +17,29 @@
     <string name="reset_message">We have sent you instructions to reset your password!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="update_profile">Update Profile</string>
+    <string name="phone">Phone</string>
+    <string name="occupation">Occupation</string>
+    <string name="nationality">Nationality</string>
+    <string name="loaction">Location</string>
+    <string name="address">Address</string>
+    <string name="names">Names</string>
+    <string name="biography">Biography</string>
+    <string name="email_address">Email Address</string>
+    <string name="payment_description">Payment Description</string>
+    <string name="crowd_funding_projects">Crowd Funding Projects</string>
+    <string name="comments">Comments</string>
+    <string name="purchase">Purchase</string>
+    <string name="naira_symbol">NGN</string>
+    <string name="bank_name">Bank Name</string>
+    <string name="account_number">Account number</string>
+    <string name="account_name">Account Name</string>
+
+    <string-array name="gender">
+        <item>Select Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 
 </resources>

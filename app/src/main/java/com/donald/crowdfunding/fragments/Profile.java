@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.donald.crowdfunding.activities.UpdateProfile;
+import com.donald.crowdfunding.activities.AddProfile;
 import com.donald.crowdfunding.business.R;
 import com.donald.crowdfunding.models.ProfileModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -97,7 +97,7 @@ public class Profile extends Fragment {
         update_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, UpdateProfile.class));
+                context.startActivity(new Intent(context, AddProfile.class));
             }
         });
 

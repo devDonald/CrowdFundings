@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.donald.crowdfunding.activities.UpdateProfile">
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.donald.crowdfunding.activities.AddProfile">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,15 +27,16 @@
             android:layout_height="wrap_content">
 
             <EditText
+                android:padding="6dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
+                android:background="@drawable/form_border"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_person_name"
                 android:hint="@string/names"
+                android:textColorHint="@color/white"
                 android:inputType="textCapWords"
-                android:fontFamily="casual"
                 android:ems="14"
                 android:imeOptions="actionNext"
 
@@ -43,31 +45,34 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="10dp"
                 android:layout_below="@id/et_person_name"
-                android:background="@drawable/border_text"
+                android:background="@drawable/form_border"
                 android:id="@+id/gender"
+                android:textColorHint="@color/white"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
                 android:entries="@array/gender"/>
             <EditText
+                android:padding="6dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
+                android:background="@drawable/form_border"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_person_address"
                 android:hint="@string/address"
+                android:textColorHint="@color/white"
                 android:inputType="textCapSentences"
-                android:fontFamily="casual"
                 android:imeOptions="actionNext"
                 android:layout_below="@id/gender"
                 />
 
             <EditText
+                android:padding="6dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
+                android:background="@drawable/form_border"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,53 +80,134 @@
                 android:hint="@string/phone"
                 android:inputType="phone"
                 android:maxLength="11"
-                android:fontFamily="casual"
+                android:textColorHint="@color/white"
                 android:imeOptions="actionNext"
                 android:layout_below="@+id/et_person_address"
                 />
             <EditText
+                android:padding="6dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
+                android:background="@drawable/form_border"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_person_email"
                 android:inputType="phone"
-                android:fontFamily="casual"
+                android:textColorHint="@color/white"
                 android:imeOptions="actionNext"
                 android:layout_below="@+id/et_person_phone"
                 />
 
             <EditText
+                android:padding="6dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
+                android:background="@drawable/form_border"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_person_occupation"
                 android:hint="@string/occupation"
                 android:inputType="textCapSentences"
-                android:fontFamily="casual"
+                android:textColorHint="@color/white"
                 android:imeOptions="actionNext"
                 android:layout_below="@+id/et_person_phone"
                 />
 
             <EditText
+                android:padding="6dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/border_text"
+                android:background="@drawable/form_border"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_person_biography"
                 android:hint="@string/biography"
                 android:inputType="textMultiLine"
-                android:fontFamily="casual"
+                android:textColorHint="@color/white"
                 android:imeOptions="actionNext"
                 android:layout_below="@+id/et_person_occupation"
                 />
+            <View
+                android:layout_below="@+id/et_person_biography"
+                android:id="@+id/line1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:padding="6dp"
+                android:layout_below="@id/line1"
+                android:id="@+id/bankDetails"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/form_border"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:padding="6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bank Details"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="6dp"
+                    />
+
+                <EditText
+                    android:padding="4dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/form_border"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_bank_name"
+                    android:hint="@string/bank_name"
+                    android:inputType="textCapSentences"
+                    android:textColorHint="@color/white"
+                    android:imeOptions="actionNext"
+                    />
+                <EditText
+                    android:padding="4dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/form_border"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_accout_name"
+                    android:hint="@string/account_name"
+                    android:inputType="textCapSentences"
+                    android:textColorHint="@color/white"
+                    android:imeOptions="actionNext"
+                    />
+                <EditText
+                    android:padding="4dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/form_border"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_account_number"
+                    android:maxLength="10"
+                    android:hint="@string/account_number"
+                    android:inputType="number"
+                    android:textColorHint="@color/white"
+                    android:imeOptions="actionNext"
+                    />
+
+            </LinearLayout>
 
 
             <Button
@@ -132,8 +218,8 @@
                 android:layout_marginTop="20dp"
                 android:textStyle="bold"
                 android:backgroundTint="@color/blue"
-                android:background="@drawable/border_text"
-                android:layout_below="@+id/et_person_biography"
+                android:background="@drawable/form_border"
+                android:layout_below="@+id/bankDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
