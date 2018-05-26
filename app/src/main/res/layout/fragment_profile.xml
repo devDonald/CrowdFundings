@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.donald.crowdfunding.fragments.Profile">
 
     <ScrollView
@@ -28,268 +30,345 @@
                 android:layout_gravity="center"
                 android:text="User Name"
                 android:textAlignment="center"
-                android:textColor="#222"
-                android:textSize="15dp" />
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
-                android:background="#ddd" />
+                android:background="@color/font_color" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:background="#3a61ce"
+                android:background="@drawable/submitbox"
                 android:paddingBottom="3dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="3dp"
                 android:text="Biography"
-                android:textColor="#fff" />
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:id="@+id/profileUserBio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:text="this is text"
-                android:textColor="#555"
-                android:textSize="16dp" />
-
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
 
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
-                android:background="#ddd" />
+                android:background="@color/font_color" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:background="#3a61ce"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/submitbox"
                 android:paddingBottom="3dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="3dp"
-                android:text="Abouts"
-                android:layout_marginBottom="10dp"
-                android:textColor="#fff" />
+                android:text="About me"
+                android:textColor="@android:color/black" />
 
             <LinearLayout
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="40dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_marginTop="10dp"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:src="@drawable/email_icon"
-                    />
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/ic_email" />
 
                 <TextView
                     android:id="@+id/profileUserEmail"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#222"
-                    android:textSize="12dp"
-                    android:text="donald@gmail.com"
-                    />
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="donald@gmail.com"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/colorWhite"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="#ddd" />
+                android:background="@color/font_color" />
 
 
-            <!--
-             last login time
-            -->
             <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="40dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_marginTop="8dp"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:src="@drawable/ic_phone"
-                    />
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_phone" />
 
                 <TextView
                     android:id="@+id/profileUserPhone"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#222"
-                    android:textSize="12dp"
-                    android:text="Phone No"
-                    />
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="Phone No"
+                    android:inputType="phone"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/colorWhite"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="#ddd" />
+                android:background="@color/font_color" />
 
 
             <!-- friends -->
 
             <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="40dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_marginTop="8dp"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:src="@drawable/location_img"
-                    />
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_location_white" />
 
                 <TextView
                     android:id="@+id/profileUserAddress"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#2200ff"
-                    android:textSize="12dp"
-                    android:text="address"
-                    />
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="Address"
+                    android:inputType="textPostalAddress"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/colorWhite"
+                    android:textSize="15sp" />
             </LinearLayout>
+
             <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="#ddd" />
+                android:background="@color/font_color" />
 
 
             <!-- friends -->
 
             <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="40dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_marginTop="8dp"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:src="@drawable/ic_occupation"
-                    />
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_occupation" />
 
                 <TextView
                     android:id="@+id/profileUserOccupation"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#2200ff"
-                    android:textSize="12dp"
-                    android:text="occupation"
-                    />
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="Occupation"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/colorWhite"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="#ddd" />
-
+                android:background="@color/font_color" />
 
 
             <!-- total backers -->
 
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="40dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="40dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:orientation="horizontal">-->
 
-                <ImageView
-                    android:layout_marginTop="8dp"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/checkmark"
-                    />
+                <!--<TextView-->
+                    <!--android:id="@+id/totalDonateLabel"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="16dp"-->
+                    <!--android:layout_marginStart="16dp"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:text="Total Donate:"-->
+                    <!--android:textColor="#009719"-->
+                    <!--android:textSize="15sp" />-->
 
-                <TextView
-                    android:id="@+id/profileBackers"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp"
+                <!--<TextView-->
+                    <!--android:id="@+id/profileBackers"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="16dp"-->
+                    <!--android:layout_marginStart="16dp"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:text="#390,000"-->
+                    <!--android:textColor="#009719"-->
+                    <!--android:textSize="15sp" />-->
+            <!--</LinearLayout>-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/submitbox"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="10dp"
+                android:paddingTop="3dp"
+                android:text="Bank Details"
+                android:textColor="@android:color/black" />
+
+                <EditText
+                    android:id="@+id/profilefullName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#009719"
-                    android:textSize="12dp"
-                    android:text="Total Donate: $0"
-                    />
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:paddingBottom="20dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/enter_account_name"
+                    android:inputType="textPersonName"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/colorWhite"
+                    android:textSize="15sp"
+                    android:drawablePadding="5dp"
+                    android:backgroundTint="@color/font_color"
+                    android:drawableLeft="@drawable/ic_person"
+                    tools:ignore="TextViewEdits" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_bank" />
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinner_dose"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/selectbank"
+                    android:layout_marginTop="5dp"
+                    app:hintText="Select Bank"
+                    style="@style/FormTextAppearance"/>
+
             </LinearLayout>
 
             <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="#ddd" />
+                android:background="@color/font_color" />
 
-            <Button
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
-                android:id="@+id/update_profile"
-                android:background="@drawable/submitbox"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/update_profile"
-                android:textColor="@color/blue"
-                android:textStyle="bold"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_card" />
+
+                <TextView
+                    android:id="@+id/profileAcctNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="Account No."
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/colorWhite"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+
+
+            <Button
+                android:id="@+id/update_profile"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/submitbox"
                 android:fontFamily="monospace"
-                />
-
-
+                android:text="@string/update_profile"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </ScrollView>

@@ -8,7 +8,7 @@
         <item
             android:id="@+id/allProject"
             android:icon="@drawable/home_icon"
-            android:title="All Projects" />
+            android:title="Crowdfunding Projects" />
         <item
             android:id="@+id/myProject"
             android:icon="@drawable/tag"
@@ -16,11 +16,8 @@
         <item
             android:id="@+id/createProject"
             android:icon="@drawable/createpost"
-            android:title="Create A Project" />
-        <item
-            android:id="@+id/editProject"
-            android:icon="@drawable/edit_file"
-            android:title="Edit Project" />
+            android:title="New CrowdFunding Project" />
+
         <item
             android:id="@+id/payments"
             android:icon="@drawable/payment"

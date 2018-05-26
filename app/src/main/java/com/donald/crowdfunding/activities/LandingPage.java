@@ -20,15 +20,15 @@ public class LandingPage extends AppCompatActivity {
         getSupportActionBar().hide();
 
 
-        mLogin=(Button)findViewById(R.id.signin);
-        mSignup=(Button)findViewById(R.id.signup);
+        mLogin= findViewById(R.id.signin);
+        mSignup= findViewById(R.id.signup);
 
         mSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent signup = new Intent(LandingPage.this,Signup.class);
                 startActivity(signup);
-                finish();
+
             }
         });
 
@@ -37,7 +37,7 @@ public class LandingPage extends AppCompatActivity {
             public void onClick(View view) {
                 Intent signin = new Intent(LandingPage.this,Signin.class);
                 startActivity(signin);
-                finish();
+
             }
         });
 
