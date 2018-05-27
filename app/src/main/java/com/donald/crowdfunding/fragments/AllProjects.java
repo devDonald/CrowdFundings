@@ -4,10 +4,14 @@ package com.donald.crowdfunding.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -43,18 +47,17 @@ public class AllProjects extends Fragment {
         View view = inflater.inflate(R.layout.fragment_all_projects, container, false);
         context = getContext();
 
-        allPost_RV=(RecyclerView)view.findViewById(R.id.homeRecycler);
+        allPost_RV= view.findViewById(R.id.homeRecycler);
         allPostReference= FirebaseDatabase.getInstance().getReference().child("PostProjects");
         allPost_RV.setHasFixedSize(true);
         allPost_RV.setLayoutManager(new GridLayoutManager(context,1));
 
+        startProject();
+
         return view;
     }
 
-    public void onStart() {
-        super.onStart();
-        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
+    private void startProject() {
         firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<CreatePostModel, AllPostViewHolder>(
                 CreatePostModel.class,
                 R.layout.all_projects_item,
@@ -69,8 +72,8 @@ public class AllProjects extends Fragment {
                 viewHolder.setCreatedBy(model.getPostOwner());
 
                 viewHolder.setTargetFunds(model.getPostFund());
-               // viewHolder.setOccupation(model.getOccupation());
-               viewHolder.setImage(context,model.getPostImage());
+                // viewHolder.setOccupation(model.getOccupation());
+                viewHolder.setImage(context,model.getPostImage());
 
 
             }
@@ -101,7 +104,7 @@ public class AllProjects extends Fragment {
         allPost_RV.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class AllPostViewHolder extends RecyclerView.ViewHolder{
+    public static class AllPostViewHolder extends RecyclerView.ViewHolder {
         View mView;
 
         public AllPostViewHolder(View itemView) {
@@ -116,20 +119,20 @@ public class AllProjects extends Fragment {
                 }
             });
         }
-        public void setProjectName(String project_names){
+        void setProjectName(String project_names){
             TextView projectName=(TextView)mView.findViewById(R.id.tv_project_name);
             projectName.setText(project_names);
 
         }
-        public void setDate(String dates){
+        void setDate(String dates){
             TextView date =(TextView)mView.findViewById(R.id.tv_date);
             date.setText(dates);
         }
-        public void setCreatedBy(String posted_by){
+        void setCreatedBy(String posted_by){
             TextView postedBy=(TextView)mView.findViewById(R.id.tv_createdBy);
             postedBy.setText(posted_by);
         }
-        public void setTargetFunds(String target_fund){
+        void setTargetFunds(String target_fund){
             TextView targetFunds=(TextView)mView.findViewById(R.id.tv_target_fund);
             targetFunds.setText(target_fund);
         }
@@ -146,7 +149,7 @@ public class AllProjects extends Fragment {
             TextView projectComment=(TextView)mView.findViewById(R.id.post_like);
             projectComment.setText(project_comment);
         }
-        public void setImage(Context ctx, String image){
+        void setImage(Context ctx, String image){
             ImageView imageView =(ImageView)mView.findViewById(R.id.projectImage);
             Picasso.with(ctx).load(image).into(imageView);
         }
