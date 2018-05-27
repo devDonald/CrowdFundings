@@ -9,6 +9,8 @@ public class CreatePostModel {
     private String postLocation;
     private String postTargetDay;
     private String postImage;
+    private String postDate;
+    private String postOwner;
 
     public CreatePostModel() {
 
@@ -16,7 +18,7 @@ public class CreatePostModel {
 
     public CreatePostModel(String uId, String postId, String postTitle, String postCategory,
                            String postDescription, String postLocation, String postTargetDay,
-                           String postFund, String postImage) {
+                           String postFund, String postImage,String postDate,String postOwner) {
         this.uId = uId;
         this.postId = postId;
         this.postTitle = postTitle;
@@ -26,6 +28,25 @@ public class CreatePostModel {
         this.postTargetDay = postTargetDay;
         this.postFund = postFund;
         this.postImage = postImage;
+        this.postDate = postDate;
+        this.postOwner =postOwner;
+    }
+
+
+    public String getPostOwner() {
+        return postOwner;
+    }
+
+    public void setPostOwner(String postOwner) {
+        this.postOwner = postOwner;
+    }
+
+    public String getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(String postDate) {
+        this.postDate = postDate;
     }
 
     public String getPostImage() {

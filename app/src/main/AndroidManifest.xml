@@ -26,7 +26,10 @@
         </activity>
         <activity android:name="com.donald.crowdfunding.activities.Signin" />
         <activity android:name="com.donald.crowdfunding.activities.Signup" />
-        <activity android:name="com.donald.crowdfunding.activities.PasswordReset"></activity>
+        <activity android:name="com.donald.crowdfunding.activities.PasswordReset"/>
+        <activity android:name="com.donald.crowdfunding.activities.AddProfile"/>
+        <activity android:name="com.donald.crowdfunding.activities.Payment"/>
+        <activity android:name="com.donald.crowdfunding.fragments.SinglePost"/>
     </application>
 
 </manifest>

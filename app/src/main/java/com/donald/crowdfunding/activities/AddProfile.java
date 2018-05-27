@@ -40,7 +40,7 @@ public class AddProfile extends AppCompatActivity {
     private EditText uBiography;
     private EditText uEmail;
     private Button updateButton;
-    private EditText uBankName;
+    private Spinner uBankName;
     private EditText uAccountName;
     private EditText uAccountNumber;
 
@@ -116,7 +116,8 @@ public class AddProfile extends AppCompatActivity {
                 final String phone =uphone.getText().toString().trim();
                 final String occupation = uoccupation.getText().toString().trim();
                 final String biography = uBiography.getText().toString().trim();
-                final String bankName = uBankName.getText().toString().trim();
+                final String bankName = uBankName.getItemAtPosition(
+                        uBankName.getSelectedItemPosition()).toString().trim();
                 final String accountName =uAccountName.getText().toString().trim();
                 final String accountNumber=uAccountNumber.getText().toString().trim();
 

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,17 +22,24 @@ import android.widget.Toast;
 import com.donald.crowdfunding.activities.MainActivity;
 import com.donald.crowdfunding.business.R;
 import com.donald.crowdfunding.models.CreatePostModel;
+import com.donald.crowdfunding.models.ProfileModel;
 import com.donald.crowdfunding.utils.Utils;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.valdesekamdem.library.mdtoast.MDToast;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -53,6 +61,10 @@ public class CreatePost extends Fragment {
     private Context context;
     private ImageView displayImage;
     private ProgressDialog mProgress;
+    private String postDate;
+    private DatabaseReference userProfile;
+    private String postOwner;
+
 
 
     public CreatePost() {
@@ -78,6 +90,9 @@ public class CreatePost extends Fragment {
         submitButton = view.findViewById(R.id.submit_btn);
         displayImage = view.findViewById(R.id.upload_post_image);
 
+        postDate = DateFormat.getDateTimeInstance().format(new Date());
+        userProfile = FirebaseDatabase.getInstance().getReference().child("Profiles");
+
 
         utils = new Utils();
 
@@ -89,6 +104,26 @@ public class CreatePost extends Fragment {
         //getting the current user id from firebase
         uid = firebaseUser.getUid();
 
+        userProfile.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ProfileModel model = dataSnapshot.getValue(ProfileModel.class);
+                try {
+                    assert model != null;
+                    Log.d("name", "" + model.getName());
+                    postOwner = model.getAccountName();
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         //picking pictures from the gallary
         postPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +182,7 @@ public class CreatePost extends Fragment {
                             Uri downloadUri = taskSnapshot.getDownloadUrl();
                             postId = postReference.push().getKey();
                             CreatePostModel model = new CreatePostModel(uid,postId,title,category,description,
-                                    location,targetDay,fund,downloadUri.toString());
+                                    location,targetDay,fund,downloadUri.toString(),postDate,postOwner);
                             postReference.child(postId).setValue(model);
 
                             MDToast mdToast = MDToast.makeText(context,

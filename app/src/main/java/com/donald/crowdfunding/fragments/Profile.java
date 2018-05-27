@@ -33,7 +33,7 @@ public class Profile extends Fragment {
     private DatabaseReference profileReference;
 
     private TextView profileName,profileBio,profileEmail,profileDonate,profileAddress;
-    private TextView profileOccupation, profilePhone;
+    private TextView profileOccupation, profilePhone, bankName, accName, acctNo;
     private ImageView profileImage;
     private String uid,bio;
     private int totalDonate,totalFriend;
@@ -59,6 +59,9 @@ public class Profile extends Fragment {
         profileAddress = view.findViewById(R.id.profileUserAddress);
         profileOccupation = view.findViewById(R.id.profileUserOccupation);
         profilePhone = view.findViewById(R.id.profileUserPhone);
+        bankName = view.findViewById(R.id.tv_profile_bankName);
+        accName= view.findViewById(R.id.tv_profile_acct_name);
+        acctNo = view.findViewById(R.id.tv_profile_AcctNo);
 
         profileReference= FirebaseDatabase.getInstance().getReference().child("Profiles");
 
@@ -79,6 +82,9 @@ public class Profile extends Fragment {
                     profileEmail.setText(profileModel.getEmail());
                     profileOccupation.setText(profileModel.getOccupation());
                     profilePhone.setText(profileModel.getPhone());
+                    bankName.setText(profileModel.getBankName());
+                    accName.setText(profileModel.getAccountName());
+                    acctNo.setText(profileModel.getAccountNumber());
 
                     Picasso.with(context).load(image).into(profileImage);
 

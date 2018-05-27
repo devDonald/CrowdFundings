@@ -108,7 +108,7 @@ public class Signin extends AppCompatActivity {
                                     } else
                                     {
                                         MDToast.makeText(getApplication(),"SignIn Successful",
-                                                MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS).show();
+                                                MDToast.LENGTH_LONG, MDToast.TYPE_INFO).show();
                                         Intent intent = new Intent(Signin.this, MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

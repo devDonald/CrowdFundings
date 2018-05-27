@@ -2,8 +2,10 @@ package com.donald.crowdfunding.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,9 +17,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.donald.crowdfunding.business.R;
+import com.donald.crowdfunding.fragments.AllProjects;
 import com.donald.crowdfunding.fragments.CreatePost;
+import com.donald.crowdfunding.fragments.LikedProjects;
+import com.donald.crowdfunding.fragments.MyProjects;
+import com.donald.crowdfunding.fragments.Payments;
 import com.donald.crowdfunding.fragments.Profile;
 import com.donald.crowdfunding.models.ProfileModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,34 +44,65 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private AppCompatActivity activity = MainActivity.this;
+    private final String TAG = MainActivity.class.getSimpleName();
     private FirebaseAuth.AuthStateListener authListener;
-    private  FirebaseUser currentUser;
+    private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private String uid;
     private String email;
     private CircleImageView userImage;
     private TextView userName, userEmail;
     private DatabaseReference userProfile;
+    private DrawerLayout drawer;
+
+    // index to identify current nav menu item
+    public static int navItemIndex = 0;
+
+    // tags used to attach the fragments
+    private static final String TAG_ALLPROJECTS = "allProjects";
+    private static final String TAG_MYPROJECT = "myProject";
+    private static final String TAG_CREATEPROJECT = "createProject";
+    private static final String TAG_EDITPROJECT = "editProject";
+    private static final String TAG_PAYMENT = "payment";
+    private static final String TAG_RECOMMEND = "recommend";
+    private static final String TAG_LOVE = "love";
+    private static final String TAG_PROFILE = "profile";
+    private static String CURRENT_TAG = TAG_ALLPROJECTS;
+    private String[] fragmentTitles;
+    // flag to load home fragment when user presses back key
+    private Boolean shouldLoadHomeFragmentOnBackPress = true;
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         userProfile = FirebaseDatabase.getInstance().getReference().child("Profiles");
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser!=null) {
+        if (currentUser != null) {
             uid = currentUser.getUid();
             email = currentUser.getEmail();
         }
 
-        Log.d("uid",""+uid);
-        Log.d("email",""+email);
+        Log.d("uid", "" + uid);
+        Log.d("email", "" + email);
 
-        mAuth= FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
+//        // Load allProjects fragment by default
+//        loadFragment(new AllProjects());
+
+        fragmentTitles = getResources().getStringArray(R.array.nav_item_fragment_titles);
+
+        if (savedInstanceState == null) {
+            navItemIndex = 0;
+            loadFragment(new AllProjects());
+        }
 
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -80,21 +118,21 @@ public class MainActivity extends AppCompatActivity
         };
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         View hView = navigationView.getHeaderView(0);
 
-        userName = (TextView) hView.findViewById(R.id.nav_userName);
-        userEmail = (TextView) hView.findViewById(R.id.nav_email);
-        userImage = (CircleImageView) hView.findViewById(R.id.navImage);
+        userName = hView.findViewById(R.id.nav_userName);
+        userEmail = hView.findViewById(R.id.nav_email);
+        userImage = hView.findViewById(R.id.navImage);
 
         userEmail.setText(email);
 
@@ -102,14 +140,15 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ProfileModel model = dataSnapshot.getValue(ProfileModel.class);
-                try{
+                try {
                     String user_image = dataSnapshot.child("profileImage").getValue(String.class);
+                    assert model != null;
                     userName.setText(model.getName());
-                    Log.d("name",""+model.getName());
+                    Log.d("name", "" + model.getName());
                     Picasso.with(getApplicationContext()).load(user_image).into(userImage);
 
-                } catch (Exception e){
-
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
 
 
@@ -124,13 +163,65 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void loadFragment(Fragment fragment) {
+
+        // selectNavMenu();
+
+        // Set toolbar title
+        setToolbarTitle();
+
+        // if the user select the current navigation menu again, don't
+        // do anything, just close the nav drawer
+        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
+            drawer.closeDrawers();
+
+            return;
+        }
+        /** Sometimes when fragment has huge data, screen hangs when
+         switching between navigation menus. So by using *runnable,
+         the fragment is loaded with cross fade effect.
+         **/
+
+                // update the main content by replacing fragments
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame_container, fragment);
+                fragmentTransaction.commit();
+
+        }
+
+
+    private void setToolbarTitle() {
+        getSupportActionBar().setTitle(fragmentTitles[navItemIndex]);
+    }
+
+//    private void selectNavMenu() {
+//        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+//    }
+
+    boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            MDToast.makeText(activity, "Press BACK again to exit",
+                    Toast.LENGTH_SHORT, MDToast.TYPE_INFO).show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
         }
     }
 
@@ -158,85 +249,100 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        if (id==R.id.allProject){
+        switch (menuItem.getItemId()) {
 
-        } else if (id==R.id.myProject){
+            case R.id.allProject:
+                Fragment allProjects = new AllProjects();
+                navItemIndex = 0;
+                loadFragment(allProjects);
+                break;
 
-        } else if(id==R.id.createProject){
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            CreatePost createPost = new CreatePost();
-            fragmentTransaction.replace(R.id.content_main, createPost);
-            fragmentTransaction.commit();
+            case R.id.myProject:
+                navItemIndex = 1;
+                Fragment myProject = new MyProjects();
+                loadFragment(myProject);
+                break;
 
-        }else if(id==R.id.editProject){
+            case R.id.createProject:
+                navItemIndex = 2;
+                Fragment createProject = new CreatePost();
+                loadFragment(createProject);
+                break;
 
-        } else if (id==R.id.payments) {
-//            Intent payment = new Intent(this,Payment.class);
-//            startActivity(payment);
+            case R.id.payments:
+                navItemIndex = 3;
+                Fragment payment = new Payments();
+                loadFragment(payment);
+                break;
 
-        }else if (id==R.id.love){
+            case R.id.love:
+                navItemIndex = 4;
+                Fragment likedProjects = new LikedProjects();
+                loadFragment(likedProjects);
+                break;
 
-        }else if (id==R.id.recommend){
-            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-            sharingIntent.setType("text/plain");
-            String shareBodyText = "Share crowd funding app";
-            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Subject here");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
-            startActivity(Intent.createChooser(sharingIntent, "Sharing Options"));
+            case R.id.recommend:
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBodyText = "Share crowd funding app";
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject here");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
+                startActivity(Intent.createChooser(sharingIntent, "Sharing Options"));
+                break;
 
-        }else if (id==R.id.nav_profile){
-            Bundle bundle = new Bundle();
-            bundle.putString("userId", uid);
-            bundle.putString("userEmail", email);
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            Profile profileActivity = new Profile();
-            profileActivity.setArguments(bundle);
-            fragmentTransaction.replace(R.id.content_main, profileActivity);
-            fragmentTransaction.commit();
+            case R.id.nav_profile:
+                navItemIndex = 5;
+                Fragment profile = new Profile();
+                loadFragment(profile);
+                Bundle bundle = new Bundle();
+                bundle.putString("userId", uid);
+                bundle.putString("userEmail", email);
+                break;
 
-        }
-        else if (id == R.id.nav_delete) {
-            if (currentUser!=null){
-                currentUser.delete().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            case R.id.nav_delete:
+
+                if (currentUser != null) {
+                    currentUser.delete().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                MDToast.makeText(getApplicationContext(), "Account deleted successfully",
+                                        MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS).show();
+                                startActivity(new Intent(MainActivity.this, LandingPage.class));
+                                finish();
+
+                            } else {
+                                MDToast.makeText(getApplicationContext(), "Sorry,account cannot be deleted",
+                                        MDToast.LENGTH_LONG, MDToast.TYPE_ERROR).show();
+
+                            }
+                        }
+                    });
+                }
+
+            case R.id.nav_logout:
+                mAuth.signOut();
+                mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            MDToast.makeText(getApplicationContext(),"Account deleted successfully",
-                                    MDToast.LENGTH_LONG,MDToast.TYPE_SUCCESS).show();
+                    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        if (user == null) {
+                            // user auth state is changed - user is null
+                            // launch login activity
                             startActivity(new Intent(MainActivity.this, LandingPage.class));
                             finish();
-
-                        } else {
-                            MDToast.makeText(getApplicationContext(),"Sorry,account cannot be deleted",
-                                    MDToast.LENGTH_LONG,MDToast.TYPE_ERROR).show();
-
                         }
                     }
                 });
-            }
 
-        } else if (id == R.id.nav_logout) {
-            mAuth.signOut();
-            mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-                @Override
-                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    if (user == null) {
-                        // user auth state is changed - user is null
-                        // launch login activity
-                        startActivity(new Intent(MainActivity.this, LandingPage.class));
-                        finish();
-                    }
-                }
-            });
+            default:
+                navItemIndex = 0;
 
         }
 
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

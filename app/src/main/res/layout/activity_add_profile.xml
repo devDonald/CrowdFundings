@@ -163,20 +163,14 @@
                     android:layout_marginBottom="6dp"
                     />
 
-                <EditText
-                    android:padding="4dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/form_border"
-                    android:layout_marginLeft="10dp"
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/et_bank_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/et_bank_name"
-                    android:hint="@string/bank_name"
-                    android:inputType="textCapSentences"
-                    android:textColorHint="@color/white"
-                    android:imeOptions="actionNext"
-                    />
+                    android:entries="@array/selectbank"
+                    android:layout_marginTop="5dp"
+                    app:hintText="Select Bank"
+                    style="@style/FormTextAppearance"/>
                 <EditText
                     android:padding="4dp"
                     android:layout_marginTop="8dp"
@@ -191,6 +185,7 @@
                     android:textColorHint="@color/white"
                     android:imeOptions="actionNext"
                     />
+
                 <EditText
                     android:padding="4dp"
                     android:layout_marginTop="8dp"
