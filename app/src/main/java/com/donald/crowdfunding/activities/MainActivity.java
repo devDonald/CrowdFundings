@@ -357,8 +357,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onStop() {
         super.onStop();
+
         if (authListener != null) {
             mAuth.removeAuthStateListener(authListener);
         }
+
+
     }
 }

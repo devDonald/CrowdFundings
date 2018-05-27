@@ -30,6 +30,7 @@
         <activity android:name="com.donald.crowdfunding.activities.AddProfile"/>
         <activity android:name="com.donald.crowdfunding.activities.Payment"/>
         <activity android:name="com.donald.crowdfunding.fragments.SinglePost"/>
+        <activity android:name="com.donald.crowdfunding.fragments.AddComment"/>
     </application>
 
 </manifest>

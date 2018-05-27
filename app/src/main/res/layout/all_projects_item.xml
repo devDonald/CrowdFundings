@@ -120,15 +120,6 @@
                 android:layout_marginRight="10dp"
                 android:textColor="@color/white"/>
 
-            <TextView
-                android:id="@+id/post_dislike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:drawablePadding="5dp"
-                android:drawableLeft="@drawable/ic_dislike"
-                android:textColor="@color/white"/>
-
         </LinearLayout>
 
     </RelativeLayout>
