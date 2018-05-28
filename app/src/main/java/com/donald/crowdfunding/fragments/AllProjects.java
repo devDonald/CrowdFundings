@@ -165,4 +165,8 @@ public class AllProjects extends Fragment {
 
     }
 
+    public void allComments(){
+
+    }
+
 }

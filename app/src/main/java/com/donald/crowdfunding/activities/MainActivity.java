@@ -17,14 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.donald.crowdfunding.business.R;
 import com.donald.crowdfunding.fragments.AllProjects;
 import com.donald.crowdfunding.fragments.CreatePost;
 import com.donald.crowdfunding.fragments.LikedProjects;
 import com.donald.crowdfunding.fragments.MyProjects;
-import com.donald.crowdfunding.fragments.Payments;
 import com.donald.crowdfunding.fragments.Profile;
 import com.donald.crowdfunding.models.ProfileModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -56,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     private TextView userName, userEmail;
     private DatabaseReference userProfile;
     private DrawerLayout drawer;
+    private boolean shouldLoadHomeFragOnBackPress = true;
 
     // index to identify current nav menu item
     public static int navItemIndex = 0;
@@ -75,12 +74,14 @@ public class MainActivity extends AppCompatActivity
     private Boolean shouldLoadHomeFragmentOnBackPress = true;
     private Handler mHandler;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         userProfile = FirebaseDatabase.getInstance().getReference().child("Profiles");
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -89,19 +90,18 @@ public class MainActivity extends AppCompatActivity
             email = currentUser.getEmail();
         }
 
-        Log.d("uid", "" + uid);
-        Log.d("email", "" + email);
-
         mAuth = FirebaseAuth.getInstance();
 
 //        // Load allProjects fragment by default
-//        loadFragment(new AllProjects());
 
         fragmentTitles = getResources().getStringArray(R.array.nav_item_fragment_titles);
 
+//        loadFragment(new AllProjects());
+
+        getHomeFragment();
+
         if (savedInstanceState == null) {
             navItemIndex = 0;
-            loadFragment(new AllProjects());
         }
 
         authListener = new FirebaseAuth.AuthStateListener() {
@@ -165,8 +165,6 @@ public class MainActivity extends AppCompatActivity
 
     private void loadFragment(Fragment fragment) {
 
-        // selectNavMenu();
-
         // Set toolbar title
         setToolbarTitle();
 
@@ -204,25 +202,22 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+//        loadFragment(new AllProjects());
         drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            if (doubleBackToExitPressedOnce) {
-                super.onBackPressed();
+            return;
+
+        }
+        if (shouldLoadHomeFragOnBackPress) {
+            if (navItemIndex != 0) {
+                navItemIndex = 0;
+                CURRENT_TAG = TAG_ALLPROJECTS;
+                loadFragment(new AllProjects());
                 return;
             }
-            this.doubleBackToExitPressedOnce = true;
-            MDToast.makeText(activity, "Press BACK again to exit",
-                    Toast.LENGTH_SHORT, MDToast.TYPE_INFO).show();
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    doubleBackToExitPressedOnce = false;
-                }
-            }, 2000);
         }
+        super.onBackPressed();
     }
 
     @Override
@@ -247,6 +242,17 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    private void getHomeFragment() {
+
+        navItemIndex = 0;
+        Fragment allProjects = new AllProjects();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out);
+        fragmentTransaction.replace(R.id.frame_container, allProjects);
+        fragmentTransaction.commit();
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -254,9 +260,11 @@ public class MainActivity extends AppCompatActivity
         switch (menuItem.getItemId()) {
 
             case R.id.allProject:
-                Fragment allProjects = new AllProjects();
-                navItemIndex = 0;
-                loadFragment(allProjects);
+//                Fragment allProjects = new AllProjects();
+//                navItemIndex = 0;
+//                loadFragment(allProjects);
+                getHomeFragment();
+//
                 break;
 
             case R.id.myProject:
@@ -273,7 +281,7 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.payments:
                 navItemIndex = 3;
-                Fragment payment = new Payments();
+                Fragment payment = new AllProjects();
                 loadFragment(payment);
                 break;
 

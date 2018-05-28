@@ -12,8 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.donald.crowdfunding.business.R;
+import com.donald.crowdfunding.models.CommentModel;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.text.DateFormat;
@@ -28,6 +32,7 @@ public class AddComment extends AppCompatActivity {
     private Button submitComment;
     private DatabaseReference commentRef;
     private String uid;
+    private int commentCount = 0;
 
     private ProgressDialog dialog;
 
@@ -53,6 +58,23 @@ public class AddComment extends AppCompatActivity {
             commenter = extras.getString("commenter");
             uid = extras.getString("uid");
         }
+
+        commentRef.child(postId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    commentCount = dataSnapshot.child("totalComments").getValue(Integer.class);
+
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         submitComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,12 +86,25 @@ public class AddComment extends AppCompatActivity {
 
                     dialog.setMessage("Commenting...");
                     dialog.show();
-                    commentRef.child(postId).child(uid).child("comment").setValue(comment);
-                    commentRef.child(postId).child(uid).child("commenter").setValue(commenter);
-                    commentRef.child(postId).child(uid).child("date").setValue(commentDate);
-                    dialog.dismiss();
-                    startActivity(new Intent(AddComment.this,SinglePost.class));
-                    finish();
+                    try {
+                        String id = commentRef.push().getKey();
+                        CommentModel commentModel = new CommentModel(comment,commenter,commentDate);
+                        commentRef.child(postId).child(id).setValue(commentModel);
+                        commentRef.child(postId).child(id).child("uid").setValue(uid);
+                        commentCount=commentCount+1;
+                        commentRef.child(postId).child("totalComments").setValue(commentCount);
+
+
+                        dialog.dismiss();
+                        Intent back = new Intent(AddComment.this,SinglePost.class);
+                        back.putExtra("position",postId);
+
+                        finish();
+
+                    }catch (Exception e){
+                        e.fillInStackTrace();
+                    }
+
                 }
             }
         });
