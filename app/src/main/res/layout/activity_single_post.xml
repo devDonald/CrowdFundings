@@ -20,7 +20,7 @@
 
 
             <ImageView
-                android:id="@+id/postPhoto"
+                android:id="@+id/singlepostPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -42,7 +42,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/createdBy"
+                android:id="@+id/singlePostCreatedBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -53,7 +53,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/desc"
+                android:id="@+id/singlePostdesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -85,7 +85,7 @@
                         android:src="@drawable/ic_tag" />
 
                     <TextView
-                        android:id="@+id/singlePostTag"
+                        android:id="@+id/singlePostCategory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -116,10 +116,44 @@
                         android:textColor="@color/colorWhite"
                         android:text="Dhanmondi 8/A"
                         android:textSize="14dp" />
+
                 </LinearLayout>
+
+
 
             </LinearLayout> <!-- tag and location area completed-->
 
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/singlePost_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:drawablePadding="3dp"
+                    android:drawableLeft="@drawable/ic_comment"
+                    android:textColor="@color/white"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/singlePost_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/ic_like"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -152,7 +186,7 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/targetFund"
+                        android:id="@+id/singlePostTarget"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="50%"
@@ -179,7 +213,7 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/funded"
+                        android:id="@+id/singlePostFunded"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="64%"
@@ -205,7 +239,7 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/remainDays"
+                        android:id="@+id/singlePostRemainDays"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="22"
@@ -215,6 +249,8 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
+
+
             </LinearLayout>
 
             <View
@@ -229,6 +265,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <Button
+                    android:id="@+id/singlePostDonateBtn"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_light_blue"
+                    android:layout_gravity="center"
+                    android:text="Donate Now"
+                    android:textColor="@android:color/black"
+                    android:textSize="14dp"
+
+                    />
 
                 <!-- button : update  -->
                 <RelativeLayout
@@ -251,7 +298,7 @@
                         android:textColor="@color/white" />
 
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/commentRecycler"
+                        android:id="@+id/singlePostCommentRecycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/commentLabel"
@@ -260,17 +307,7 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/singlePostDonateBtn"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_light_blue"
-                android:layout_gravity="center"
-                android:text="Donate Now"
-                android:textColor="@android:color/black"
-                android:textSize="14dp"
 
-                />
 
         </LinearLayout>
     </ScrollView>

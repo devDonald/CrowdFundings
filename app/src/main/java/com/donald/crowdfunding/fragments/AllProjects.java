@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -32,7 +32,7 @@ public class AllProjects extends Fragment {
     private DatabaseReference allPostReference;
     private Context context;
 
-    FirebaseRecyclerAdapter<CreatePostModel,AllPostViewHolder> firebaseRecyclerAdapter;
+    private FirebaseRecyclerAdapter<CreatePostModel,AllPostViewHolder> firebaseRecyclerAdapter;
 
 
     public AllProjects() {
@@ -50,7 +50,7 @@ public class AllProjects extends Fragment {
         allPost_RV= view.findViewById(R.id.homeRecycler);
         allPostReference= FirebaseDatabase.getInstance().getReference().child("PostProjects");
         allPost_RV.setHasFixedSize(true);
-        allPost_RV.setLayoutManager(new GridLayoutManager(context,1));
+        allPost_RV.setLayoutManager(new LinearLayoutManager(context));
 
         startProject();
 
@@ -58,6 +58,7 @@ public class AllProjects extends Fragment {
     }
 
     private void startProject() {
+
         firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<CreatePostModel, AllPostViewHolder>(
                 CreatePostModel.class,
                 R.layout.all_projects_item,
