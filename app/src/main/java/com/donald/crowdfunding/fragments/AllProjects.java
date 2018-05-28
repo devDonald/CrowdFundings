@@ -4,14 +4,10 @@ package com.donald.crowdfunding.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -61,6 +57,7 @@ public class AllProjects extends Fragment {
 
     private void startProject() {
 
+
         firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<CreatePostModel, AllPostViewHolder>(
                 CreatePostModel.class,
                 R.layout.all_projects_item,
@@ -75,8 +72,8 @@ public class AllProjects extends Fragment {
                 viewHolder.setCreatedBy(model.getPostOwner());
 
                 viewHolder.setTargetFunds(model.getPostFund());
-                // viewHolder.setOccupation(model.getOccupation());
-                viewHolder.setImage(context,model.getPostImage());
+               // viewHolder.setOccupation(model.getOccupation());
+               viewHolder.setImage(context,model.getPostImage());
 
 
             }
@@ -107,7 +104,7 @@ public class AllProjects extends Fragment {
         allPost_RV.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class AllPostViewHolder extends RecyclerView.ViewHolder {
+    public static class AllPostViewHolder extends RecyclerView.ViewHolder{
         View mView;
         Util util = new Util();
         Context context;
@@ -124,6 +121,7 @@ public class AllProjects extends Fragment {
                 }
             });
         }
+
         void setProjectName(String project_names){
             TextView projectName= mView.findViewById(R.id.tv_project_name);
             projectName.setText(project_names);
@@ -173,6 +171,10 @@ public class AllProjects extends Fragment {
             mClickListener = clickListener;
         }
 
+
+    }
+
+    public void allComments(){
 
     }
 

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,9 +17,14 @@ import android.widget.TextView;
 import com.donald.crowdfunding.business.R;
 import com.donald.crowdfunding.models.CommentModel;
 import com.donald.crowdfunding.models.CreatePostModel;
+import com.donald.crowdfunding.models.DisplayComment;
+import com.donald.crowdfunding.models.LikesModel;
 import com.donald.crowdfunding.models.ProfileModel;
+<<<<<<< HEAD
 import com.donald.crowdfunding.util.Util;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+=======
+>>>>>>> c2b12ba80ae2132ff03be7d35b6b92c33d94076c
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +33,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SinglePost extends AppCompatActivity {
@@ -46,17 +55,25 @@ public class SinglePost extends AppCompatActivity {
     private TextView singlePostLike;
     private TextView singlePostDislike;
     private TextView singlePostComment;
-    private RecyclerView comments;
+    private RecyclerView commentsRecycler;
     private Button donate;
     private String projectId;
     private String userName;
     private FirebaseUser currentUser;
     private String uid;
+    private List<CommentModel> list;
     private DatabaseReference commentRef;
+<<<<<<< HEAD
     private FirebaseRecyclerAdapter<CommentModel,AllCommentViewHolder> firebaseRecyclerAdapter;
 
     private Util util = new Util();
 
+=======
+    private DatabaseReference likeRef;
+    private int totalComment=0;
+    private int like = 0;
+    private  RecyclerviewAdapter recycler;
+>>>>>>> c2b12ba80ae2132ff03be7d35b6b92c33d94076c
 
 
     @Override
@@ -75,11 +92,12 @@ public class SinglePost extends AppCompatActivity {
         singlePostRemDays = findViewById(R.id.singlePostRemainDays);
         singlePostLike = findViewById(R.id.singlePost_like);
         singlePostComment = findViewById(R.id.singlePost_comment);
-        comments = findViewById(R.id.singlePostCommentRecycler);
+        commentsRecycler = findViewById(R.id.singlePostCommentRecycler);
         donate = findViewById(R.id.singlePostDonateBtn);
 
-        comments.setHasFixedSize(true);
-        comments.setLayoutManager(new LinearLayoutManager(SinglePost.this));
+        commentsRecycler.setHasFixedSize(true);
+        commentsRecycler.setLayoutManager(new LinearLayoutManager(SinglePost.this));
+        recycler = new RecyclerviewAdapter(list);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
@@ -89,24 +107,8 @@ public class SinglePost extends AppCompatActivity {
 
         postDetails = FirebaseDatabase.getInstance().getReference().child("PostProjects");
         profileRef = FirebaseDatabase.getInstance().getReference().child("Profiles");
+        likeRef = FirebaseDatabase.getInstance().getReference().child("Likes");
         commentRef = FirebaseDatabase.getInstance().getReference().child("Comments");
-
-        commentRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds:dataSnapshot.getChildren()){
-
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
 
         profileRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -149,6 +151,8 @@ public class SinglePost extends AppCompatActivity {
                             singlePostTarget.setText(totalAmount2);
                             projectId = details.getPostId();
                             Picasso.with(SinglePost.this).load(details.getPostImage()).into(singlePostPhoto);
+                           // commentRef.child(projectId);
+
 
                         }catch (Exception e){
                             e.getMessage();
@@ -179,61 +183,137 @@ public class SinglePost extends AppCompatActivity {
             }
         });
 
+
+        singlePostLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LikesModel likes = new LikesModel(uid);
+                likeRef.child(position).setValue(likes);
+
+            }
+        });
+
+        loadComments();
+        likes();
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        loadComments();
+        likes();
 
-        firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<CommentModel, AllCommentViewHolder>(
-                CommentModel.class,
-                R.layout.comment_item,
-                AllCommentViewHolder.class,
-                commentRef
-        ) {
-
-            @Override
-            protected void populateViewHolder(AllCommentViewHolder viewHolder, CommentModel model, int position) {
-                viewHolder.setComment(model.getComment());
-                viewHolder.setCommenter(model.getCommenter());
-                viewHolder.setCommentDate(model.getDate());
-
-            }
-
-            @Override
-            public AllCommentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                AllCommentViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
-
-
-                return viewHolder;
-            }
-        };
-        comments.setAdapter(firebaseRecyclerAdapter);
 
     }
 
-    public static class AllCommentViewHolder extends RecyclerView.ViewHolder{
-        View mView;
+    public void loadComments(){
+        try {
+            commentRef.child(position).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    try {
+                        list = new ArrayList<>();
 
-        public AllCommentViewHolder(View itemView) {
-            super(itemView);
-            mView=itemView;
+                        for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
+
+                            DisplayComment commentModel = dataSnapshot1.getValue(DisplayComment.class);
+                            CommentModel listdata = new CommentModel();
+                            String comment=commentModel.getComment();
+                            String commenter=commentModel.getCommenter();
+                            String date=commentModel.getDate();
+                            listdata.setComment(comment);
+                            listdata.setCommenter(commenter);
+                            listdata.setDate(date);
+                            Log.d("comment",""+comment);
+                            list.add(listdata);
+                            Log.d("listdata",""+listdata.getComment());
+
+
+                        }
+
+                        Log.d("list",""+list);
+
+                        commentsRecycler.setAdapter(recycler);
+
+                    } catch (Exception e){
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        } catch (Exception e){
 
         }
-        public void setComment(String post_comment){
-            TextView postComment=(TextView)mView.findViewById(R.id.tv_comment);
-            postComment.setText(post_comment);
+    }
 
-        }
-        public void setCommenter(String post_commenter){
-            TextView postCommenter =(TextView)mView.findViewById(R.id.tv_Date);
-            postCommenter.setText(post_commenter);
-        }
-        public void setCommentDate(String comment_date){
-            TextView commentDate=(TextView)mView.findViewById(R.id.tv_commenter);
-            commentDate.setText(comment_date);
+    public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.MyHolder>{
+
+        List<CommentModel> listdata;
+
+        public RecyclerviewAdapter(List<CommentModel> listdata) {
+            this.listdata = listdata;
         }
 
+        @Override
+        public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_item,parent,false);
+
+            MyHolder myHolder = new MyHolder(view);
+            return myHolder;
+        }
+
+
+        public void onBindViewHolder(MyHolder holder, int position) {
+            CommentModel data = listdata.get(position);
+            holder.comment.setText(data.getComment());
+            holder.commenter.setText(data.getCommenter());
+            holder.date.setText(data.getDate());
+        }
+
+        @Override
+        public int getItemCount() {
+            return listdata.size();
+        }
+
+
+        class MyHolder extends RecyclerView.ViewHolder{
+            TextView comment,commenter,date;
+
+            public MyHolder(View itemView) {
+                super(itemView);
+                comment = (TextView) itemView.findViewById(R.id.tv_comment);
+                commenter = (TextView) itemView.findViewById(R.id.tv_commenter);
+                date = (TextView) itemView.findViewById(R.id.tv_Date);
+
+            }
+        }
+
+
+    }
+    public void likes(){
+        commentRef.child(position).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    totalComment = dataSnapshot.child("totalComments").getValue(Integer.class);
+                    singlePostComment.setText(""+totalComment);
+
+                } catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }
