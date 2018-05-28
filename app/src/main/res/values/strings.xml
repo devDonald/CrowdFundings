@@ -80,6 +80,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="bank_details">Bank Details</string>
     <string name="update_profile">Update Profile</string>
+    <string name="email_notification">Make sure that the email account is active</string>
 
 
 </resources>

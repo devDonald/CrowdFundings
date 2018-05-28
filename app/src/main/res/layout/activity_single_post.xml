@@ -254,6 +254,35 @@
 
             </LinearLayout>
 
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0.5dp"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:background="@color/font_color" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Donation Amount"-->
+                <!--android:background="@drawable/submitbox"-->
+                <!--android:padding="5dp"-->
+                <!--android:textColor="@color/colorPrimaryDark"-->
+                <!--android:layout_marginStart="10dp"/>-->
+
+            <!--<android.support.design.widget.TextInputEditText-->
+                <!--android:id="@+id/donationAmount"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:hint="Enter Donation Amount"-->
+                <!--android:layout_marginStart="10dp"-->
+                <!--android:layout_marginTop="15dp"-->
+                <!--android:backgroundTint="@color/colorPrimaryDark"-->
+                <!--android:textColor="@android:color/white"-->
+                <!--android:textColorHint="@color/colorWhite"-->
+                <!--/>-->
+
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -274,9 +303,7 @@
                     android:layout_gravity="center"
                     android:text="Donate Now"
                     android:textColor="@android:color/black"
-                    android:textSize="14dp"
-
-                    />
+                    android:textSize="14sp" />
 
                 <!-- button : update  -->
                 <RelativeLayout

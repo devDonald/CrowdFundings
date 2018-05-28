@@ -1,7 +1,10 @@
 package com.donald.crowdfunding.fragments;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,20 +14,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.donald.crowdfunding.activities.Payment;
 import com.donald.crowdfunding.business.R;
 import com.donald.crowdfunding.models.CommentModel;
 import com.donald.crowdfunding.models.CreatePostModel;
 import com.donald.crowdfunding.models.DisplayComment;
 import com.donald.crowdfunding.models.LikesModel;
 import com.donald.crowdfunding.models.ProfileModel;
-<<<<<<< HEAD
 import com.donald.crowdfunding.util.Util;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-=======
->>>>>>> c2b12ba80ae2132ff03be7d35b6b92c33d94076c
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +36,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class SinglePost extends AppCompatActivity {
@@ -55,25 +55,25 @@ public class SinglePost extends AppCompatActivity {
     private TextView singlePostLike;
     private TextView singlePostDislike;
     private TextView singlePostComment;
+    private EditText donationAmt;
     private RecyclerView commentsRecycler;
     private Button donate;
     private String projectId;
     private String userName;
     private FirebaseUser currentUser;
     private String uid;
-    private List<CommentModel> list;
+    private ArrayList<CommentModel> commentList;
     private DatabaseReference commentRef;
-<<<<<<< HEAD
-    private FirebaseRecyclerAdapter<CommentModel,AllCommentViewHolder> firebaseRecyclerAdapter;
 
     private Util util = new Util();
-
-=======
     private DatabaseReference likeRef;
-    private int totalComment=0;
+    private int totalComment = 0;
     private int like = 0;
-    private  RecyclerviewAdapter recycler;
->>>>>>> c2b12ba80ae2132ff03be7d35b6b92c33d94076c
+    private RecyclerviewAdapter recycler;
+
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+    private final String PREFS_NAME = "pref";
 
 
     @Override
@@ -93,16 +93,21 @@ public class SinglePost extends AppCompatActivity {
         singlePostLike = findViewById(R.id.singlePost_like);
         singlePostComment = findViewById(R.id.singlePost_comment);
         commentsRecycler = findViewById(R.id.singlePostCommentRecycler);
+        donationAmt = findViewById(R.id.donationAmount);
         donate = findViewById(R.id.singlePostDonateBtn);
+
+//        commentList = new ArrayList<>();
+
+        preferences = getApplicationContext().getSharedPreferences(
+                PREFS_NAME, Activity.MODE_PRIVATE);
 
         commentsRecycler.setHasFixedSize(true);
         commentsRecycler.setLayoutManager(new LinearLayoutManager(SinglePost.this));
-        recycler = new RecyclerviewAdapter(list);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             uid = currentUser.getUid();
-            Log.d("uid",uid);
+            Log.d("uid", uid);
         }
 
         postDetails = FirebaseDatabase.getInstance().getReference().child("PostProjects");
@@ -123,12 +128,12 @@ public class SinglePost extends AppCompatActivity {
             }
         });
         Bundle extras = getIntent().getExtras();
-        if (extras!=null){
+        if (extras != null) {
             position = extras.getString("position");
-            if (position!=null){
+            if (position != null) {
                 DatabaseReference userRef = postDetails.child(position);
 
-                Log.d("userref",""+userRef);
+                Log.d("userref", "" + userRef);
                 ValueEventListener valueEventListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -151,10 +156,10 @@ public class SinglePost extends AppCompatActivity {
                             singlePostTarget.setText(totalAmount2);
                             projectId = details.getPostId();
                             Picasso.with(SinglePost.this).load(details.getPostImage()).into(singlePostPhoto);
-                           // commentRef.child(projectId);
+                            // commentRef.child(projectId);
 
 
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.getMessage();
                         }
 
@@ -175,10 +180,10 @@ public class SinglePost extends AppCompatActivity {
         singlePostComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent comment = new Intent(SinglePost.this,AddComment.class);
-                comment.putExtra("projectid",projectId);
-                comment.putExtra("commenter",userName);
-                comment.putExtra("uid",uid);
+                Intent comment = new Intent(SinglePost.this, AddComment.class);
+                comment.putExtra("projectid", projectId);
+                comment.putExtra("commenter", userName);
+                comment.putExtra("uid", uid);
                 startActivity(comment);
             }
         });
@@ -196,6 +201,20 @@ public class SinglePost extends AppCompatActivity {
         loadComments();
         likes();
 
+        donate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+//                String donationAmount = donationAmt.getText().toString().trim();
+
+//                editor.putString("donationAmt", donationAmount);
+//                editor.apply();
+
+                startActivity(new Intent(SinglePost.this, Payment.class));
+                finish();
+            }
+        });
+
     }
 
     @Override
@@ -207,36 +226,42 @@ public class SinglePost extends AppCompatActivity {
 
     }
 
-    public void loadComments(){
+    public void loadComments() {
         try {
             commentRef.child(position).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     try {
-                        list = new ArrayList<>();
 
-                        for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+
+                            CommentModel listdata = new CommentModel();
 
                             DisplayComment commentModel = dataSnapshot1.getValue(DisplayComment.class);
-                            CommentModel listdata = new CommentModel();
-                            String comment=commentModel.getComment();
-                            String commenter=commentModel.getCommenter();
-                            String date=commentModel.getDate();
+
+                            assert commentModel != null;
+                            String comment = commentModel.getComment();
+                            String commenter = commentModel.getCommenter();
+                            String date = commentModel.getDate();
                             listdata.setComment(comment);
                             listdata.setCommenter(commenter);
                             listdata.setDate(date);
-                            Log.d("comment",""+comment);
-                            list.add(listdata);
-                            Log.d("listdata",""+listdata.getComment());
+                            Log.d("comment", "" + comment);
+
+                            commentList.add(listdata);
+                            Log.d("listdata", "" + listdata.getComment());
 
 
                         }
 
-                        Log.d("list",""+list);
+                        recycler = new RecyclerviewAdapter(getApplicationContext(), commentList);
+
+                        Log.d("list", "" + commentList.size());
 
                         commentsRecycler.setAdapter(recycler);
 
-                    } catch (Exception e){
+                    } catch (Exception e) {
+                        e.printStackTrace();
 
                     }
                 }
@@ -247,24 +272,27 @@ public class SinglePost extends AppCompatActivity {
                 }
             });
 
-        } catch (Exception e){
+        } catch (Exception e) {
+            e.getMessage();
 
         }
     }
 
-    public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.MyHolder>{
+    public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.MyHolder> {
 
-        List<CommentModel> listdata;
+        ArrayList<CommentModel> listdata = new ArrayList<CommentModel>();
+        private Context context;
 
-        public RecyclerviewAdapter(List<CommentModel> listdata) {
+        RecyclerviewAdapter(Context context, ArrayList<CommentModel> listdata) {
+            this.context = context;
             this.listdata = listdata;
         }
 
         @Override
         public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_item,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_item, parent, false);
 
-            MyHolder myHolder = new MyHolder(view);
+            MyHolder myHolder = new MyHolder(view, context, listdata);
             return myHolder;
         }
 
@@ -282,29 +310,33 @@ public class SinglePost extends AppCompatActivity {
         }
 
 
-        class MyHolder extends RecyclerView.ViewHolder{
-            TextView comment,commenter,date;
+        class MyHolder extends RecyclerView.ViewHolder {
+            TextView comment, commenter, date;
 
-            public MyHolder(View itemView) {
+            ArrayList<CommentModel> commentModel = new ArrayList<CommentModel>();
+            Context context;
+
+            public MyHolder(View itemView, Context context, ArrayList<CommentModel> listdata) {
                 super(itemView);
-                comment = (TextView) itemView.findViewById(R.id.tv_comment);
-                commenter = (TextView) itemView.findViewById(R.id.tv_commenter);
-                date = (TextView) itemView.findViewById(R.id.tv_Date);
+                comment = itemView.findViewById(R.id.tv_comment);
+                commenter = itemView.findViewById(R.id.tv_commenter);
+                date = itemView.findViewById(R.id.tv_Date);
 
             }
         }
 
 
     }
-    public void likes(){
+
+    public void likes() {
         commentRef.child(position).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try {
                     totalComment = dataSnapshot.child("totalComments").getValue(Integer.class);
-                    singlePostComment.setText(""+totalComment);
+                    singlePostComment.setText("" + totalComment);
 
-                } catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }

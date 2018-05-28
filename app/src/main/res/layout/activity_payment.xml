@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/colorPrimaryDark"
                         android:padding="10dp"
-                        android:text="NGN 200,000"
+                        tools:text="NGN 200,000"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="25sp" />
@@ -62,7 +62,8 @@
                 android:id="@+id/card_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-2dp" />
+                android:layout_marginTop="-2dp"
+                android:theme="@style/paymentTheme"/>
 
             <LinearLayout style="@style/bt_field_container">
 
@@ -131,19 +132,21 @@
                 android:paddingEnd="0dp"
                 android:paddingLeft="@dimen/bt_mobile_number_explanation_padding"
                 android:paddingStart="@dimen/bt_mobile_number_explanation_padding"
-                android:text="Make sure that the email account is active "
+                android:text="@string/email_notification"
                 android:visibility="visible"
                 tools:ignore="RtlCompat" />
 
-            <Button
-                android:id="@+id/proceed"
-                android:layout_width="match_parent"
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/donationAmount"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="18dp"
-                android:background="@drawable/btn_login_bg"
-                android:text="Proceed"
+                android:hint="Enter Donation Amount"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="@color/colorPrimaryDark"
                 android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:textColorHint="@color/colorWhite"
+                />
 
             <TextView
                 android:id="@+id/card_error"
@@ -156,13 +159,19 @@
                 android:textAlignment="center"
                 tools:ignore="RtlCompat" />
 
+            <Button
+                android:id="@+id/proceed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="18dp"
+                android:background="@drawable/btn_login_bg"
+                android:text="Proceed"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+
+
         </LinearLayout>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:src="@drawable/paystack_"/>
-
 
     </LinearLayout>
 </ScrollView>

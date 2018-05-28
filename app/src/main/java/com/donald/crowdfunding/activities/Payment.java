@@ -44,7 +44,7 @@ import co.paystack.android.model.Charge;
 public class Payment extends AppCompatActivity implements OnCardFormSubmitListener, CardEditText.OnCardTypeChangedListener {
     private static final int GROUP_LEN = 4;
     private static final int koboToNaira = 100;
-    String paystack_public_key = "pk_test_0e5f98685a822c219423b8fbfefaddf47dca0c41";
+    String paystack_public_key = "pk_test_ae87573e042aabbd29b71d04693dfec06f7dcdbe";
     double amount = 0.0;
     KProgressHUD hud;
     private Util util;
@@ -68,7 +68,8 @@ public class Payment extends AppCompatActivity implements OnCardFormSubmitListen
     private Transaction transaction;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
-    public static String PREFS_NAME = "mypre";
+    public static String PREFS_NAME = "pref";
+    String donation_amt;
 
     private static final CardType[] SUPPORTED_CARD_TYPES = {CardType.VISA, CardType.MASTERCARD,
             CardType.DISCOVER, CardType.AMEX, CardType.DINERS_CLUB, CardType.JCB,
@@ -86,6 +87,8 @@ public class Payment extends AppCompatActivity implements OnCardFormSubmitListen
         util = new Util();
         preferences = getApplicationContext().getSharedPreferences(
                 PREFS_NAME, Activity.MODE_PRIVATE);
+
+        donation_amt = preferences.getString("donationAmt", "");
 
         PaystackSdk.setPublicKey(paystack_public_key);
 
@@ -133,7 +136,7 @@ public class Payment extends AppCompatActivity implements OnCardFormSubmitListen
         double totalAmount1 = Double.parseDouble(totalAmount);
         String totalAmount2 = ((String.valueOf(util.getFormatedAmount(totalAmount1))));
 
-        mAmount.setText(getString(R.string.naira_symbol).concat(totalAmount2));
+        mAmount.setText(getString(R.string.naira_symbol).concat(""));
         mEmail.setText(emailAddress);
 
         //initialize sdk
