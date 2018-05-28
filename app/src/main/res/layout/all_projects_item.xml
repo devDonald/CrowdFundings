@@ -86,9 +86,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_createdBy"
             android:layout_toRightOf="@id/projectImage"
-            android:text="NGN500,000.00"
+            android:drawableLeft="@drawable/ic_naira_blue"
+            android:drawablePadding="3dp"
             android:textColor="#0391FD"
-            android:textStyle="bold"
             android:layout_marginLeft="15dp"/>
 
         <LinearLayout

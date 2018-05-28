@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="10dp"
-                    android:hint="donald@gmail.com"
+                    android:hint="Email Address"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/colorWhite"
                     android:textSize="15sp" />
@@ -249,7 +249,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
                     android:text="Total Donate:"
-                    android:textColor="#009719"
+                    android:textColor="#FFF"
                     android:textSize="15sp" />
 
                 <TextView
@@ -259,8 +259,10 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
-                    android:text="#390,000"
-                    android:textColor="#009719"
+                    android:drawableLeft="@drawable/ic_naira"
+                    android:text="0.0"
+                    android:drawablePadding="5dp"
+                    android:textColor="#FFFFFF"
                     android:textSize="15sp" />
             </LinearLayout>
 
@@ -282,7 +284,7 @@
                     android:id="@+id/tv_profile_acct_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginStart="35dp"
                     android:layout_marginEnd="40dp"
                     android:paddingBottom="10dp"
                     android:layout_marginTop="10dp"
@@ -291,9 +293,9 @@
                     android:textSize="15sp"
                     android:paddingLeft="5dp"
                     android:hint="@string/account_name"
-                    android:drawablePadding="5dp"
+                    android:drawablePadding="12dp"
                     android:backgroundTint="@color/font_color"
-                    android:drawableLeft="@drawable/ic_person"
+                    android:drawableLeft="@drawable/ic_user"
                     tools:ignore="TextViewEdits" />
             <View
                 android:layout_width="match_parent"

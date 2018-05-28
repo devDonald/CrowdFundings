@@ -417,7 +417,7 @@ public class Payment extends AppCompatActivity implements OnCardFormSubmitListen
             editor = preferences.edit();
             editor.putString("refid", transaction.getReference());
             editor.putString("paymentFor", sendPaymentFor);
-            editor.commit();
+            editor.apply();
 
 //            Intent paymentHistory = new Intent(Payment.this,
 //                    BookedActivity.class);

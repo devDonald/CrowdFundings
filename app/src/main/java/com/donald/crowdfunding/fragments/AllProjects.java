@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.donald.crowdfunding.business.R;
 import com.donald.crowdfunding.models.CreatePostModel;
+import com.donald.crowdfunding.util.Util;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -31,6 +32,7 @@ public class AllProjects extends Fragment {
     private RecyclerView allPost_RV;
     private DatabaseReference allPostReference;
     private Context context;
+    private Util util = new Util();
 
     private FirebaseRecyclerAdapter<CreatePostModel,AllPostViewHolder> firebaseRecyclerAdapter;
 
@@ -107,6 +109,8 @@ public class AllProjects extends Fragment {
 
     public static class AllPostViewHolder extends RecyclerView.ViewHolder {
         View mView;
+        Util util = new Util();
+        Context context;
 
         public AllPostViewHolder(View itemView) {
             super(itemView);
@@ -121,37 +125,41 @@ public class AllProjects extends Fragment {
             });
         }
         void setProjectName(String project_names){
-            TextView projectName=(TextView)mView.findViewById(R.id.tv_project_name);
+            TextView projectName= mView.findViewById(R.id.tv_project_name);
             projectName.setText(project_names);
 
         }
         void setDate(String dates){
-            TextView date =(TextView)mView.findViewById(R.id.tv_date);
+            TextView date = mView.findViewById(R.id.tv_date);
             date.setText(dates);
         }
         void setCreatedBy(String posted_by){
-            TextView postedBy=(TextView)mView.findViewById(R.id.tv_createdBy);
+            TextView postedBy= mView.findViewById(R.id.tv_createdBy);
             postedBy.setText(posted_by);
         }
         void setTargetFunds(String target_fund){
-            TextView targetFunds=(TextView)mView.findViewById(R.id.tv_target_fund);
-            targetFunds.setText(target_fund);
+            TextView targetFunds= mView.findViewById(R.id.tv_target_fund);
+            double targetFund = Double.parseDouble(target_fund);
+            String totalAmount2 = ((String.valueOf(util.getFormatedAmount(targetFund))));
+
+//            targetFunds.setText(context.getString(R.string.naira_symbol).concat(totalAmount2));
+            targetFunds.setText(totalAmount2);
         }
 
         public void setProjectLike(String project_like){
-            TextView projectLike=(TextView)mView.findViewById(R.id.post_like);
+            TextView projectLike= mView.findViewById(R.id.post_like);
             projectLike.setText(project_like);
         }
         public void setProjectDisLike(String dproject_like){
-            TextView dprojectLike=(TextView)mView.findViewById(R.id.post_like);
+            TextView dprojectLike= mView.findViewById(R.id.post_like);
             dprojectLike.setText(dproject_like);
         }
         public void setProjectComment(String project_comment){
-            TextView projectComment=(TextView)mView.findViewById(R.id.post_like);
+            TextView projectComment= mView.findViewById(R.id.post_like);
             projectComment.setText(project_comment);
         }
         void setImage(Context ctx, String image){
-            ImageView imageView =(ImageView)mView.findViewById(R.id.projectImage);
+            ImageView imageView = mView.findViewById(R.id.projectImage);
             Picasso.with(ctx).load(image).into(imageView);
         }
 

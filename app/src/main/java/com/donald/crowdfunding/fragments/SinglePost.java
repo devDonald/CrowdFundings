@@ -17,6 +17,7 @@ import com.donald.crowdfunding.business.R;
 import com.donald.crowdfunding.models.CommentModel;
 import com.donald.crowdfunding.models.CreatePostModel;
 import com.donald.crowdfunding.models.ProfileModel;
+import com.donald.crowdfunding.util.Util;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,6 +54,8 @@ public class SinglePost extends AppCompatActivity {
     private String uid;
     private DatabaseReference commentRef;
     private FirebaseRecyclerAdapter<CommentModel,AllCommentViewHolder> firebaseRecyclerAdapter;
+
+    private Util util = new Util();
 
 
 
@@ -137,7 +140,13 @@ public class SinglePost extends AppCompatActivity {
                             singlePostCreatedBy.setText(details.getPostOwner());
                             singlePostLocation.setText(details.getPostLocation());
                             singlePostDesc.setText(details.getPostDescription());
-                            singlePostTarget.setText(details.getPostFund());
+
+                            double totalAmount1 = Double.parseDouble(details.getPostFund());
+                            String totalAmount2 = ((String.valueOf(util.getFormatedAmount(totalAmount1))));
+
+//                            singlePostTarget.setText(getString(R.string.naira_symbol).concat(totalAmount2));
+
+                            singlePostTarget.setText(totalAmount2);
                             projectId = details.getPostId();
                             Picasso.with(SinglePost.this).load(details.getPostImage()).into(singlePostPhoto);
 

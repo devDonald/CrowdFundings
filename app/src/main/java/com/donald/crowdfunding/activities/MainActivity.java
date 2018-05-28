@@ -135,7 +135,9 @@ public class MainActivity extends AppCompatActivity
         userEmail = hView.findViewById(R.id.nav_email);
         userImage = hView.findViewById(R.id.navImage);
 
+
         userEmail.setText(email);
+
 
         userProfile.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
